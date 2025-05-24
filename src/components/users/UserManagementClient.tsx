@@ -190,18 +190,18 @@ export function UserManagementClient({ initialUsers }: UserManagementClientProps
           </DialogHeader>
           <form onSubmit={handleSubmit}>
             <div className="grid gap-4 py-4">
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="name" className="text-right">Name</Label>
-                <Input id="name" name="name" value={currentUser.name || ''} onChange={handleChange} className="col-span-3" required />
+              <div className="grid grid-cols-1 sm:grid-cols-4 items-start sm:items-center gap-x-4 gap-y-1">
+                <Label htmlFor="name" className="sm:text-right">Name</Label>
+                <Input id="name" name="name" value={currentUser.name || ''} onChange={handleChange} className="sm:col-span-3 w-full" required />
               </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="email" className="text-right">Email</Label>
-                <Input id="email" name="email" type="email" value={currentUser.email || ''} onChange={handleChange} className="col-span-3" required />
+              <div className="grid grid-cols-1 sm:grid-cols-4 items-start sm:items-center gap-x-4 gap-y-1">
+                <Label htmlFor="email" className="sm:text-right">Email</Label>
+                <Input id="email" name="email" type="email" value={currentUser.email || ''} onChange={handleChange} className="sm:col-span-3 w-full" required />
               </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="role" className="text-right">Role</Label>
+              <div className="grid grid-cols-1 sm:grid-cols-4 items-start sm:items-center gap-x-4 gap-y-1">
+                <Label htmlFor="role" className="sm:text-right">Role</Label>
                 <Select value={currentUser.role || 'Maker'} onValueChange={handleRoleChange}>
-                  <SelectTrigger className="col-span-3">
+                  <SelectTrigger className="sm:col-span-3 w-full">
                     <SelectValue placeholder="Select role" />
                   </SelectTrigger>
                   <SelectContent>
@@ -211,9 +211,11 @@ export function UserManagementClient({ initialUsers }: UserManagementClientProps
                   </SelectContent>
                 </Select>
               </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="isActive" className="text-right">Active</Label>
-                <Switch id="isActive" checked={!!currentUser.isActive} onCheckedChange={handleStatusChange} className="col-span-3 justify-self-start" />
+              <div className="grid grid-cols-1 sm:grid-cols-4 items-start sm:items-center gap-x-4 gap-y-1">
+                <Label htmlFor="isActive" className="sm:text-right self-center sm:self-auto">Active</Label> {/* Adjusted self-center for label alignment with switch */}
+                <div className="sm:col-span-3 flex items-center">
+                    <Switch id="isActive" checked={!!currentUser.isActive} onCheckedChange={handleStatusChange} />
+                </div>
               </div>
             </div>
             <DialogFooter>

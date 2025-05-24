@@ -171,7 +171,7 @@ export function SkuManagementClient({ initialSkus }: SkuManagementClientProps) {
                     />
                   </TableCell>
                   <TableCell className="font-medium">{sku.name}</TableCell>
-                  <TableCell>${sku.price.toFixed(2)}</TableCell>
+                  <TableCell>₹{sku.price.toFixed(2)}</TableCell>
                   <TableCell>{sku.category}</TableCell>
                   <TableCell>
                     <Badge variant={sku.isOutOfStock ? "destructive" : "default"}>
@@ -214,31 +214,31 @@ export function SkuManagementClient({ initialSkus }: SkuManagementClientProps) {
           </DialogHeader>
           <form onSubmit={handleSubmit}>
             <div className="grid gap-4 py-4">
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="name" className="text-right">Name</Label>
-                <Input id="name" name="name" value={currentSku.name} onChange={handleChange} className="col-span-3" required />
+              <div className="grid grid-cols-1 sm:grid-cols-4 items-start sm:items-center gap-x-4 gap-y-1">
+                <Label htmlFor="name" className="sm:text-right">Name</Label>
+                <Input id="name" name="name" value={currentSku.name} onChange={handleChange} className="sm:col-span-3 w-full" required />
               </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="description" className="text-right">Description</Label>
-                <Textarea id="description" name="description" value={currentSku.description} onChange={handleChange} className="col-span-3" required />
+              <div className="grid grid-cols-1 sm:grid-cols-4 items-start sm:items-center gap-x-4 gap-y-1">
+                <Label htmlFor="description" className="sm:text-right">Description</Label>
+                <Textarea id="description" name="description" value={currentSku.description} onChange={handleChange} className="sm:col-span-3 w-full" required />
               </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="price" className="text-right">Price</Label>
-                <Input id="price" name="price" type="number" step="0.01" value={currentSku.price} onChange={handleChange} className="col-span-3" required />
+              <div className="grid grid-cols-1 sm:grid-cols-4 items-start sm:items-center gap-x-4 gap-y-1">
+                <Label htmlFor="price" className="sm:text-right">Price (₹)</Label>
+                <Input id="price" name="price" type="number" step="0.01" value={currentSku.price} onChange={handleChange} className="sm:col-span-3 w-full" required />
               </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="category" className="text-right">Category</Label>
-                <Input id="category" name="category" value={currentSku.category} onChange={handleChange} className="col-span-3" required />
+              <div className="grid grid-cols-1 sm:grid-cols-4 items-start sm:items-center gap-x-4 gap-y-1">
+                <Label htmlFor="category" className="sm:text-right">Category</Label>
+                <Input id="category" name="category" value={currentSku.category} onChange={handleChange} className="sm:col-span-3 w-full" required />
               </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="imageUrl" className="text-right">Image URL</Label>
-                <Input id="imageUrl" name="imageUrl" value={currentSku.imageUrl || ''} onChange={handleChange} className="col-span-3" placeholder="https://placehold.co/300x200.png"/>
+              <div className="grid grid-cols-1 sm:grid-cols-4 items-start sm:items-center gap-x-4 gap-y-1">
+                <Label htmlFor="imageUrl" className="sm:text-right">Image URL</Label>
+                <Input id="imageUrl" name="imageUrl" value={currentSku.imageUrl || ''} onChange={handleChange} className="sm:col-span-3 w-full" placeholder="https://placehold.co/300x200.png"/>
               </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="visibility" className="text-right">Visibility (Cities)</Label>
-                <Input id="visibility" name="visibility" value={visibilityInput} onChange={handleVisibilityChange} className="col-span-3" placeholder="e.g., New York, London"/>
+              <div className="grid grid-cols-1 sm:grid-cols-4 items-start sm:items-center gap-x-4 gap-y-1">
+                <Label htmlFor="visibility" className="sm:text-right">Visibility (Cities)</Label>
+                <Input id="visibility" name="visibility" value={visibilityInput} onChange={handleVisibilityChange} className="sm:col-span-3 w-full" placeholder="e.g., New York, London"/>
               </div>
-              <div className="col-span-4 flex items-center space-x-2 justify-end">
+              <div className="flex items-center space-x-2 sm:col-start-2 sm:col-span-3 mt-2"> {/* Adjusted for alignment with inputs */}
                 <Checkbox id="isOutOfStock" name="isOutOfStock" checked={currentSku.isOutOfStock} onCheckedChange={(checked) => setCurrentSku(prev => ({...prev, isOutOfStock: !!checked}))} />
                 <Label htmlFor="isOutOfStock">Mark as Out of Stock</Label>
               </div>
@@ -253,5 +253,3 @@ export function SkuManagementClient({ initialSkus }: SkuManagementClientProps) {
     </Card>
   );
 }
-
-    

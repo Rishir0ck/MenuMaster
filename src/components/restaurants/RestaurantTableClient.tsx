@@ -8,10 +8,10 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from "@/components/ui/dialog";
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Textarea } from '@/components/ui/textarea';
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 import { Eye, Edit2, Trash2, CheckCircle, XCircle, MoreVertical, ShieldAlert, ToggleLeft, ToggleRight } from 'lucide-react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { toast } from "@/hooks/use-toast";
@@ -216,17 +216,17 @@ export function RestaurantTableClient({ restaurants: initialRestaurants, title, 
             <DialogDescription>Viewing information for {selectedRestaurant?.name}.</DialogDescription>
           </DialogHeader>
           {selectedRestaurant && (
-            <div className="grid gap-4 py-4">
-              <p><strong>Name:</strong> {selectedRestaurant.name}</p>
-              <p><strong>Email:</strong> {selectedRestaurant.email}</p>
-              <p><strong>Phone:</strong> {selectedRestaurant.phone}</p>
-              <p><strong>Address:</strong> {selectedRestaurant.address}</p>
-              <p><strong>Status:</strong> <Badge variant={getStatusBadgeVariant(selectedRestaurant.status)}>{selectedRestaurant.status}</Badge></p>
-              <p><strong>KYC Submitted:</strong> {selectedRestaurant.kycSubmittedAt ? new Date(selectedRestaurant.kycSubmittedAt).toLocaleDateString() : 'N/A'}</p>
-              <p><strong>Cuisine:</strong> {selectedRestaurant.shopInfo?.cuisineType}</p>
-              <p><strong>Description:</strong> {selectedRestaurant.shopInfo?.description}</p>
-              {selectedRestaurant.kycInfo && <p><strong>KYC Info:</strong> {selectedRestaurant.kycInfo}</p>}
-              {selectedRestaurant.transactionHistory && <p><strong>Transaction History Sample:</strong> {selectedRestaurant.transactionHistory}</p>}
+            <div className="grid gap-2 py-4 text-sm">
+              <div className="grid grid-cols-[auto_1fr] gap-x-2"><span className="font-medium">Name:</span> <span>{selectedRestaurant.name}</span></div>
+              <div className="grid grid-cols-[auto_1fr] gap-x-2"><span className="font-medium">Email:</span> <span>{selectedRestaurant.email}</span></div>
+              <div className="grid grid-cols-[auto_1fr] gap-x-2"><span className="font-medium">Phone:</span> <span>{selectedRestaurant.phone}</span></div>
+              <div className="grid grid-cols-[auto_1fr] gap-x-2"><span className="font-medium">Address:</span> <span>{selectedRestaurant.address}</span></div>
+              <div className="grid grid-cols-[auto_1fr] gap-x-2 items-center"><span className="font-medium">Status:</span> <Badge variant={getStatusBadgeVariant(selectedRestaurant.status)}>{selectedRestaurant.status}</Badge></div>
+              <div className="grid grid-cols-[auto_1fr] gap-x-2"><span className="font-medium">KYC Submitted:</span> <span>{selectedRestaurant.kycSubmittedAt ? new Date(selectedRestaurant.kycSubmittedAt).toLocaleDateString() : 'N/A'}</span></div>
+              <div className="grid grid-cols-[auto_1fr] gap-x-2"><span className="font-medium">Cuisine:</span> <span>{selectedRestaurant.shopInfo?.cuisineType}</span></div>
+              <div className="grid grid-cols-[auto_1fr] gap-x-2"><span className="font-medium">Description:</span> <span>{selectedRestaurant.shopInfo?.description}</span></div>
+              {selectedRestaurant.kycInfo && <div className="grid grid-cols-[auto_1fr] gap-x-2"><span className="font-medium">KYC Info:</span> <span className="break-all">{selectedRestaurant.kycInfo}</span></div>}
+              {selectedRestaurant.transactionHistory && <div className="grid grid-cols-[auto_1fr] gap-x-2"><span className="font-medium">Transaction History:</span> <span className="break-all">{selectedRestaurant.transactionHistory}</span></div>}
             </div>
           )}
           <DialogFooter>
@@ -242,43 +242,45 @@ export function RestaurantTableClient({ restaurants: initialRestaurants, title, 
             <DialogTitle>Edit Restaurant: {selectedRestaurant?.name}</DialogTitle>
           </DialogHeader>
           {selectedRestaurant && (
-            <div className="grid gap-4 py-4">
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="name" className="text-right">Name</Label>
-                <Input id="name" name="name" value={formData?.name || ''} onChange={handleFormChange} className="col-span-3" />
+            <form onSubmit={(e) => {e.preventDefault(); handleSaveChanges();}}>
+              <div className="grid gap-4 py-4">
+                <div className="grid grid-cols-1 sm:grid-cols-4 items-start sm:items-center gap-x-4 gap-y-1">
+                  <Label htmlFor="edit-name" className="sm:text-right">Name</Label>
+                  <Input id="edit-name" name="name" value={formData?.name || ''} onChange={handleFormChange} className="sm:col-span-3 w-full" />
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-4 items-start sm:items-center gap-x-4 gap-y-1">
+                  <Label htmlFor="edit-email" className="sm:text-right">Email</Label>
+                  <Input id="edit-email" name="email" type="email" value={formData?.email || ''} onChange={handleFormChange} className="sm:col-span-3 w-full" />
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-4 items-start sm:items-center gap-x-4 gap-y-1">
+                  <Label htmlFor="edit-phone" className="sm:text-right">Phone</Label>
+                  <Input id="edit-phone" name="phone" value={formData?.phone || ''} onChange={handleFormChange} className="sm:col-span-3 w-full" />
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-4 items-start sm:items-center gap-x-4 gap-y-1">
+                  <Label htmlFor="edit-address" className="sm:text-right">Address</Label>
+                  <Input id="edit-address" name="address" value={formData?.address || ''} onChange={handleFormChange} className="sm:col-span-3 w-full" />
+                </div>
+                 <div className="grid grid-cols-1 sm:grid-cols-4 items-start sm:items-center gap-x-4 gap-y-1">
+                  <Label htmlFor="edit-status" className="sm:text-right">Status</Label>
+                  <Select value={formData?.status} onValueChange={(value) => handleSelectChange('status', value as Restaurant['status'])}>
+                    <SelectTrigger className="sm:col-span-3 w-full">
+                      <SelectValue placeholder="Select status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {(['Pending Approval', 'Approved', 'Rejected', 'Active', 'Deactivated', 'Fraudulent'] as Restaurant['status'][]).map(s => (
+                        <SelectItem key={s} value={s}>{s}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                {/* Add more fields for shopInfo, etc. If shopInfo is edited, ensure formData.shopInfo exists */}
               </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="email" className="text-right">Email</Label>
-                <Input id="email" name="email" value={formData?.email || ''} onChange={handleFormChange} className="col-span-3" />
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="phone" className="text-right">Phone</Label>
-                <Input id="phone" name="phone" value={formData?.phone || ''} onChange={handleFormChange} className="col-span-3" />
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="address" className="text-right">Address</Label>
-                <Input id="address" name="address" value={formData?.address || ''} onChange={handleFormChange} className="col-span-3" />
-              </div>
-               <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="status" className="text-right">Status</Label>
-                <Select value={formData?.status} onValueChange={(value) => handleSelectChange('status', value as Restaurant['status'])}>
-                  <SelectTrigger className="col-span-3">
-                    <SelectValue placeholder="Select status" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {(['Pending Approval', 'Approved', 'Rejected', 'Active', 'Deactivated', 'Fraudulent'] as Restaurant['status'][]).map(s => (
-                      <SelectItem key={s} value={s}>{s}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              {/* Add more fields for shopInfo, etc. */}
-            </div>
+              <DialogFooter>
+                <Button type="button" variant="outline" onClick={() => setIsEditModalOpen(false)}>Cancel</Button>
+                <Button type="submit">Save Changes</Button>
+              </DialogFooter>
+            </form>
           )}
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setIsEditModalOpen(false)}>Cancel</Button>
-            <Button onClick={handleSaveChanges}>Save Changes</Button>
-          </DialogFooter>
         </DialogContent>
       </Dialog>
 
@@ -320,6 +322,3 @@ export function RestaurantTableClient({ restaurants: initialRestaurants, title, 
     </Card>
   );
 }
-
-
-    

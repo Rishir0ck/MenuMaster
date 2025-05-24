@@ -14,7 +14,7 @@ interface DashboardClientContentProps {
 
 const chartConfig = {
   totalRevenue: {
-    label: "Revenue",
+    label: "Revenue (₹)",
     color: "hsl(var(--chart-1))",
   },
   totalOrders: {
@@ -33,7 +33,7 @@ export function DashboardClientContent({ stats, monthlyData }: DashboardClientCo
             <DollarSign className="h-5 w-5 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">${stats.totalRevenue.toLocaleString()}</div>
+            <div className="text-2xl font-bold">₹{stats.totalRevenue.toLocaleString('en-IN')}</div>
             <p className="text-xs text-muted-foreground">+20.1% from last month</p>
           </CardContent>
         </Card>
@@ -73,17 +73,38 @@ export function DashboardClientContent({ stats, monthlyData }: DashboardClientCo
         <Card>
           <CardHeader>
             <CardTitle>Monthly Order Summary</CardTitle>
-            <CardDescription>Total orders and revenue over the past few months.</CardDescription>
+            <CardDescription>Total orders and revenue (₹) over the past few months.</CardDescription>
           </CardHeader>
           <CardContent className="h-[350px] w-full">
             <ChartContainer config={chartConfig} className="h-full w-full">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={monthlyData} margin={{ top: 5, right: 10, left: -20, bottom: 5 }}>
+                <BarChart data={monthlyData} margin={{ top: 5, right: 10, left: 5, bottom: 5 }}> {/* Adjusted left margin for YAxis ticks */}
                   <CartesianGrid strokeDasharray="3 3" vertical={false} />
                   <XAxis dataKey="month" tickLine={false} axisLine={false} tickMargin={8} />
-                  <YAxis yAxisId="left" orientation="left" stroke="hsl(var(--chart-1))" tickLine={false} axisLine={false} tickMargin={8} />
-                  <YAxis yAxisId="right" orientation="right" stroke="hsl(var(--chart-2))" tickLine={false} axisLine={false} tickMargin={8} />
-                  <ChartTooltip content={<ChartTooltipContent />} />
+                  <YAxis 
+                    yAxisId="left" 
+                    orientation="left" 
+                    stroke="hsl(var(--chart-1))" 
+                    tickLine={false} 
+                    axisLine={false} 
+                    tickMargin={8}
+                    tickFormatter={(value) => `₹${Number(value).toLocaleString('en-IN')}`} 
+                  />
+                  <YAxis 
+                    yAxisId="right" 
+                    orientation="right" 
+                    stroke="hsl(var(--chart-2))" 
+                    tickLine={false} 
+                    axisLine={false} 
+                    tickMargin={8}
+                    tickFormatter={(value) => Number(value).toLocaleString('en-IN')}
+                  />
+                  <ChartTooltip content={<ChartTooltipContent formatter={(value, name) => {
+                    if (name === 'Revenue') {
+                      return [`₹${Number(value).toLocaleString('en-IN')}`, name];
+                    }
+                    return [Number(value).toLocaleString('en-IN'), name];
+                  }} />} />
                   <ChartLegend content={<ChartLegendContent />} />
                   <Bar yAxisId="left" dataKey="totalRevenue" fill="hsl(var(--chart-1))" radius={4} name="Revenue" />
                   <Bar yAxisId="right" dataKey="totalOrders" fill="hsl(var(--chart-2))" radius={4} name="Orders" />
