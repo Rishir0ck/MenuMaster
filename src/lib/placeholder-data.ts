@@ -1,3 +1,4 @@
+
 import type { Restaurant, SkuItem, PricingRule, AdminUser, MonthlyOrderSummary, OverviewStats } from './types';
 
 export const placeholderRestaurants: Restaurant[] = [
@@ -133,7 +134,7 @@ export const placeholderAdminUsers: AdminUser[] = [
     id: 'user2',
     name: 'Bob The Builder',
     email: 'bob@menumaster.com',
-    role: 'Maker',
+    role: 'Maker Admin',
     isActive: true,
     lastLogin: new Date(Date.now() - 86400000 * 1).toISOString(),
     createdAt: new Date(Date.now() - 86400000 * 15).toISOString(),
@@ -142,7 +143,7 @@ export const placeholderAdminUsers: AdminUser[] = [
     id: 'user3',
     name: 'Charlie Brown',
     email: 'charlie@menumaster.com',
-    role: 'Checker',
+    role: 'Checker Admin',
     isActive: false,
     createdAt: new Date(Date.now() - 86400000 * 5).toISOString(),
   },
@@ -175,3 +176,4 @@ export interface PricingRule {
   approvedBy?: string;
   createdAt: string;
 }
+

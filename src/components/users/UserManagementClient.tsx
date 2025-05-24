@@ -23,7 +23,7 @@ interface UserManagementClientProps {
 const defaultUser: Omit<AdminUser, 'id' | 'createdAt' | 'lastLogin'> = {
   name: '',
   email: '',
-  role: 'Maker',
+  role: 'Maker Admin',
   isActive: true,
 };
 
@@ -127,7 +127,7 @@ export function UserManagementClient({ initialUsers }: UserManagementClientProps
       <CardHeader className="flex flex-row items-center justify-between">
         <div>
           <CardTitle>Manage Admin Users</CardTitle>
-          <CardDescription>Onboard and manage internal admin users and their roles.</CardDescription>
+          <CardDescription>Manage Pack-Tamam internal staff, including Admins, Maker Admins, and Checker Admins.</CardDescription>
         </div>
         <Button onClick={() => handleOpenModal()} size="sm">
           <PlusCircle className="mr-2 h-4 w-4" /> Add User
@@ -190,30 +190,30 @@ export function UserManagementClient({ initialUsers }: UserManagementClientProps
           </DialogHeader>
           <form onSubmit={handleSubmit}>
             <div className="grid gap-4 py-4">
-              <div className="grid grid-cols-1 sm:grid-cols-4 items-start sm:items-center gap-x-4 gap-y-1">
-                <Label htmlFor="name" className="sm:text-right">Name</Label>
-                <Input id="name" name="name" value={currentUser.name || ''} onChange={handleChange} className="sm:col-span-3 w-full" required />
+              <div className="grid grid-cols-1 md:grid-cols-4 items-start md:items-center gap-x-4 gap-y-1">
+                <Label htmlFor="name" className="md:text-right">Name</Label>
+                <Input id="name" name="name" value={currentUser.name || ''} onChange={handleChange} className="md:col-span-3 w-full" required />
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-4 items-start sm:items-center gap-x-4 gap-y-1">
-                <Label htmlFor="email" className="sm:text-right">Email</Label>
-                <Input id="email" name="email" type="email" value={currentUser.email || ''} onChange={handleChange} className="sm:col-span-3 w-full" required />
+              <div className="grid grid-cols-1 md:grid-cols-4 items-start md:items-center gap-x-4 gap-y-1">
+                <Label htmlFor="email" className="md:text-right">Email</Label>
+                <Input id="email" name="email" type="email" value={currentUser.email || ''} onChange={handleChange} className="md:col-span-3 w-full" required />
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-4 items-start sm:items-center gap-x-4 gap-y-1">
-                <Label htmlFor="role" className="sm:text-right">Role</Label>
-                <Select value={currentUser.role || 'Maker'} onValueChange={handleRoleChange}>
-                  <SelectTrigger className="sm:col-span-3 w-full">
+              <div className="grid grid-cols-1 md:grid-cols-4 items-start md:items-center gap-x-4 gap-y-1">
+                <Label htmlFor="role" className="md:text-right">Role</Label>
+                <Select value={currentUser.role || 'Maker Admin'} onValueChange={handleRoleChange}>
+                  <SelectTrigger className="md:col-span-3 w-full">
                     <SelectValue placeholder="Select role" />
                   </SelectTrigger>
                   <SelectContent>
-                    {(['Admin', 'Maker', 'Checker'] as UserRole[]).map(role => (
+                    {(['Admin', 'Maker Admin', 'Checker Admin'] as UserRole[]).map(role => (
                       <SelectItem key={role} value={role}>{role}</SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-4 items-start sm:items-center gap-x-4 gap-y-1">
-                <Label htmlFor="isActive" className="sm:text-right self-center sm:self-auto">Active</Label> {/* Adjusted self-center for label alignment with switch */}
-                <div className="sm:col-span-3 flex items-center">
+              <div className="grid grid-cols-1 md:grid-cols-4 items-start md:items-center gap-x-4 gap-y-1">
+                <Label htmlFor="isActive" className="md:text-right self-center md:self-auto">Active</Label>
+                <div className="md:col-span-3 flex items-center">
                     <Switch id="isActive" checked={!!currentUser.isActive} onCheckedChange={handleStatusChange} />
                 </div>
               </div>
@@ -228,3 +228,4 @@ export function UserManagementClient({ initialUsers }: UserManagementClientProps
     </Card>
   );
 }
+

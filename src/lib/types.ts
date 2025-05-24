@@ -8,15 +8,15 @@ export interface Restaurant {
   phone: string;
   address: string;
   status: RestaurantStatus;
-  kycSubmittedAt?: string; 
+  kycSubmittedAt?: string;
   shopInfo?: {
     description: string;
     cuisineType: string;
   };
   orderCount?: number;
   totalRevenue?: number;
-  transactionHistory?: string; 
-  kycInfo?: string; 
+  transactionHistory?: string;
+  kycInfo?: string;
 }
 
 export interface SkuItem {
@@ -33,16 +33,16 @@ export interface SkuItem {
 export interface PricingRule {
   id: string;
   name: string; // Name for this pricing rule
-  skuId?: string; 
+  skuId?: string;
   basePrice?: number; // Optional if only slab pricing
   slabs: { from: number; to: number; pricePerUnit: number }[];
-  status: 'Pending' | 'Approved' | 'Rejected'; 
-  createdBy: string; 
+  status: 'Pending' | 'Approved' | 'Rejected';
+  createdBy: string;
   approvedBy?: string;
   createdAt: string; // ISO date string
 }
 
-export type UserRole = 'Admin' | 'Maker' | 'Checker';
+export type UserRole = 'Admin' | 'Maker Admin' | 'Checker Admin';
 
 export interface AdminUser {
   id: string;
@@ -50,12 +50,12 @@ export interface AdminUser {
   email: string;
   role: UserRole;
   isActive: boolean;
-  lastLogin?: string; 
+  lastLogin?: string;
   createdAt: string; // ISO date string
 }
 
 export interface MonthlyOrderSummary {
-  month: string; 
+  month: string;
   totalOrders: number;
   totalRevenue: number;
 }
@@ -66,3 +66,4 @@ export interface OverviewStats {
   totalSkus: number;
   totalRevenue: number;
 }
+
