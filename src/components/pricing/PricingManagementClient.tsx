@@ -1,13 +1,14 @@
+
 "use client";
 
 import type { PricingRule, SkuItem } from '@/lib/types';
 import { useState, type FormEvent } from 'react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge';
+import { Badge } from '@/components/ui/badge';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input';
+import { Input } from '@/components/ui/input';
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { PlusCircle, Edit2, Trash2, CheckCircle, XCircle, Eye, MoreVertical } from 'lucide-react';
