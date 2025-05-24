@@ -205,7 +205,7 @@ export function SkuManagementClient({ initialSkus }: SkuManagementClientProps) {
       </CardContent>
 
       <Dialog open={isModalOpen} onOpenChange={handleCloseModal}>
-        <DialogContent className="sm:max-w-lg">
+        <DialogContent className="sm:max-w-lg md:max-w-xl">
           <DialogHeader>
             <DialogTitle>{isEditing ? 'Edit SKU' : 'Add New SKU'}</DialogTitle>
             <DialogDescription>
@@ -213,34 +213,36 @@ export function SkuManagementClient({ initialSkus }: SkuManagementClientProps) {
             </DialogDescription>
           </DialogHeader>
           <form onSubmit={handleSubmit}>
-            <div className="grid gap-4 py-4">
-              <div className="grid grid-cols-1 sm:grid-cols-4 items-start sm:items-center gap-x-4 gap-y-1.5">
-                <Label htmlFor="name" className="sm:text-right">Name</Label>
-                <Input id="name" name="name" value={currentSku.name} onChange={handleChange} className="sm:col-span-3 w-full" required />
+            <div className="space-y-4 py-4">
+              <div className="grid grid-cols-1 gap-y-1.5 md:grid-cols-4 md:items-center md:gap-x-4">
+                <Label htmlFor="name" className="md:text-right">Name</Label>
+                <Input id="name" name="name" value={currentSku.name} onChange={handleChange} className="md:col-span-3 w-full" required />
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-4 items-start sm:items-start gap-x-4 gap-y-1.5"> {/* sm:items-start for textarea label */}
-                <Label htmlFor="description" className="sm:text-right">Description</Label>
-                <Textarea id="description" name="description" value={currentSku.description} onChange={handleChange} className="sm:col-span-3 w-full" required />
+              <div className="grid grid-cols-1 gap-y-1.5 md:grid-cols-4 md:items-start md:gap-x-4"> {/* md:items-start for textarea label */}
+                <Label htmlFor="description" className="md:text-right">Description</Label>
+                <Textarea id="description" name="description" value={currentSku.description} onChange={handleChange} className="md:col-span-3 w-full" required />
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-4 items-start sm:items-center gap-x-4 gap-y-1.5">
-                <Label htmlFor="price" className="sm:text-right">Price (₹)</Label>
-                <Input id="price" name="price" type="number" step="0.01" value={currentSku.price} onChange={handleChange} className="sm:col-span-3 w-full" required />
+              <div className="grid grid-cols-1 gap-y-1.5 md:grid-cols-4 md:items-center md:gap-x-4">
+                <Label htmlFor="price" className="md:text-right">Price (₹)</Label>
+                <Input id="price" name="price" type="number" step="0.01" value={currentSku.price} onChange={handleChange} className="md:col-span-3 w-full" required />
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-4 items-start sm:items-center gap-x-4 gap-y-1.5">
-                <Label htmlFor="category" className="sm:text-right">Category</Label>
-                <Input id="category" name="category" value={currentSku.category} onChange={handleChange} className="sm:col-span-3 w-full" required />
+              <div className="grid grid-cols-1 gap-y-1.5 md:grid-cols-4 md:items-center md:gap-x-4">
+                <Label htmlFor="category" className="md:text-right">Category</Label>
+                <Input id="category" name="category" value={currentSku.category} onChange={handleChange} className="md:col-span-3 w-full" required />
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-4 items-start sm:items-center gap-x-4 gap-y-1.5">
-                <Label htmlFor="imageUrl" className="sm:text-right">Image URL</Label>
-                <Input id="imageUrl" name="imageUrl" value={currentSku.imageUrl || ''} onChange={handleChange} className="sm:col-span-3 w-full" placeholder="https://placehold.co/300x200.png"/>
+              <div className="grid grid-cols-1 gap-y-1.5 md:grid-cols-4 md:items-center md:gap-x-4">
+                <Label htmlFor="imageUrl" className="md:text-right">Image URL</Label>
+                <Input id="imageUrl" name="imageUrl" value={currentSku.imageUrl || ''} onChange={handleChange} className="md:col-span-3 w-full" placeholder="https://placehold.co/300x200.png"/>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-4 items-start sm:items-center gap-x-4 gap-y-1.5">
-                <Label htmlFor="visibility" className="sm:text-right">Visibility (Cities)</Label>
-                <Input id="visibility" name="visibility" value={visibilityInput} onChange={handleVisibilityChange} className="sm:col-span-3 w-full" placeholder="e.g., New York, London"/>
+              <div className="grid grid-cols-1 gap-y-1.5 md:grid-cols-4 md:items-center md:gap-x-4">
+                <Label htmlFor="visibility" className="md:text-right">Visibility (Cities)</Label>
+                <Input id="visibility" name="visibility" value={visibilityInput} onChange={handleVisibilityChange} className="md:col-span-3 w-full" placeholder="e.g., New York, London"/>
               </div>
-              <div className="flex items-center space-x-2 sm:col-start-2 sm:col-span-3 mt-2">
-                <Checkbox id="isOutOfStock" name="isOutOfStock" checked={currentSku.isOutOfStock} onCheckedChange={(checked) => setCurrentSku(prev => ({...prev, isOutOfStock: !!checked}))} />
-                <Label htmlFor="isOutOfStock">Mark as Out of Stock</Label>
+              <div className="grid grid-cols-1 md:grid-cols-4 md:items-center md:gap-x-4">
+                <div className="flex items-center space-x-2 md:col-start-2 md:col-span-3">
+                  <Checkbox id="isOutOfStock" name="isOutOfStock" checked={currentSku.isOutOfStock} onCheckedChange={(checked) => setCurrentSku(prev => ({...prev, isOutOfStock: !!checked}))} />
+                  <Label htmlFor="isOutOfStock">Mark as Out of Stock</Label>
+                </div>
               </div>
             </div>
             <DialogFooter>
@@ -253,3 +255,4 @@ export function SkuManagementClient({ initialSkus }: SkuManagementClientProps) {
     </Card>
   );
 }
+
