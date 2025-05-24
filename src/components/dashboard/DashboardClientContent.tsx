@@ -5,7 +5,7 @@ import type { MonthlyOrderSummary, OverviewStats } from '@/lib/types';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent } from '@/components/ui/chart';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from 'recharts';
-import { AlertTriangle, ListChecks, Users, DollarSign, ShoppingCart, Activity } from 'lucide-react';
+import { AlertTriangle, ListChecks, Users, IndianRupee, ShoppingCart, Activity } from 'lucide-react';
 
 interface DashboardClientContentProps {
   stats: OverviewStats;
@@ -30,7 +30,7 @@ export function DashboardClientContent({ stats, monthlyData }: DashboardClientCo
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
-            <DollarSign className="h-5 w-5 text-muted-foreground" />
+            <IndianRupee className="h-5 w-5 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">₹{stats.totalRevenue.toLocaleString('en-IN')}</div>
