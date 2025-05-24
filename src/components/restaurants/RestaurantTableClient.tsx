@@ -1,3 +1,4 @@
+
 "use client";
 
 import type { Restaurant } from '@/lib/types';
@@ -260,7 +261,7 @@ export function RestaurantTableClient({ restaurants: initialRestaurants, title, 
               </div>
                <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="status" className="text-right">Status</Label>
-                <Select value={formData?.status} onValueChange={(value) => handleSelectChange('status', value)}>
+                <Select value={formData?.status} onValueChange={(value) => handleSelectChange('status', value as Restaurant['status'])}>
                   <SelectTrigger className="col-span-3">
                     <SelectValue placeholder="Select status" />
                   </SelectTrigger>
@@ -311,7 +312,7 @@ export function RestaurantTableClient({ restaurants: initialRestaurants, title, 
               onClick={handleConfirmAction}
               disabled={actionType === 'reject' && !rejectionReason}
             >
-              Confirm {actionType?.charAt(0).toUpperCase() + actionType!.slice(1)}
+              {actionType ? `Confirm ${actionType.charAt(0).toUpperCase() + actionType.slice(1)}` : 'Confirm Action'}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -319,3 +320,6 @@ export function RestaurantTableClient({ restaurants: initialRestaurants, title, 
     </Card>
   );
 }
+
+
+    
