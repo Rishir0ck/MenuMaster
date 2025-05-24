@@ -62,8 +62,8 @@ export function AppShell({ children, pageTitle }: AppShellProps) {
             <SidebarTrigger className="md:hidden" >
               <Menu className="h-6 w-6"/>
             </SidebarTrigger>
-            <div className="flex-1">
-              <h1 className="text-lg font-semibold md:text-xl">{pageTitle}</h1>
+            <div className="flex-1 overflow-hidden"> {/* Added overflow-hidden here */}
+              <h1 className="text-lg font-semibold md:text-xl truncate">{pageTitle}</h1> {/* Added truncate */}
             </div>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
