@@ -1,16 +1,17 @@
+
 "use client";
 
 import type { AdminUser, UserRole } from '@/lib/types';
 import { useState, type FormEvent } from 'react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge';
+import { Badge } from '@/components/ui/badge';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input';
+import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch';
+import { Switch } from '@/components/ui/switch';
 import { PlusCircle, Edit2, Trash2, MoreVertical } from 'lucide-react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { toast } from "@/hooks/use-toast";
@@ -212,7 +213,7 @@ export function UserManagementClient({ initialUsers }: UserManagementClientProps
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="isActive" className="text-right">Active</Label>
-                <Switch id="isActive" checked={currentUser.isActive} onCheckedChange={handleStatusChange} className="col-span-3 justify-self-start" />
+                <Switch id="isActive" checked={!!currentUser.isActive} onCheckedChange={handleStatusChange} className="col-span-3 justify-self-start" />
               </div>
             </div>
             <DialogFooter>
