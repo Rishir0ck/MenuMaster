@@ -31,18 +31,23 @@ export function AppShell({ children, pageTitle }: AppShellProps) {
   const { isAuthenticated, logout, userName, isLoading: authIsLoading } = useAuth();
 
   useEffect(() => {
-    if (!authIsLoading && !isAuthenticated) {
+    if (!authIsLoading && !isAuthenticated && pathname !== '/login') {
       router.replace('/login');
     }
-  }, [isAuthenticated, authIsLoading, router]);
+  }, [isAuthenticated, authIsLoading, router, pathname]);
 
-  if (authIsLoading || !isAuthenticated) {
+  if (authIsLoading || (!authIsLoading && !isAuthenticated && pathname !== '/login')) {
     return (
       <div className="flex min-h-screen w-full items-center justify-center bg-background">
         <Loader2 className="h-12 w-12 animate-spin text-primary" />
       </div>
     );
   }
+  
+  // If on the login page and not authenticated, LoginPage component handles rendering.
+  // AppShell should not render its main structure if the user is not authenticated 
+  // and is being redirected or is on a page that doesn't use AppShell.
+  // The checks above handle the loader/redirect. If we pass them, isAuthenticated must be true.
 
   return (
     <SidebarProvider>
