@@ -1,8 +1,8 @@
 
 import { redirect } from 'next/navigation';
 
-// This page will redirect to /dashboard. 
-// The AuthProvider and AppShell will then handle redirection to /login if not authenticated.
+// This page will redirect to /login.
+// The LoginPage component will then handle redirection to /dashboard if already authenticated.
 export default function HomePage() {
-  redirect('/dashboard');
+  redirect('/login');
 }
