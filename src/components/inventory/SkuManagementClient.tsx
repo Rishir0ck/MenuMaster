@@ -134,12 +134,12 @@ export function SkuManagementClient({ initialSkus }: SkuManagementClientProps) {
 
   return (
     <Card>
-      <CardHeader className="flex flex-row items-center justify-between">
+      <CardHeader className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
           <CardTitle>Manage SKUs</CardTitle>
           <CardDescription>Add, update, or delete stock keeping units.</CardDescription>
         </div>
-        <Button onClick={() => handleOpenModal()} size="sm">
+        <Button onClick={() => handleOpenModal()} size="sm" className="w-full md:w-auto">
           <PlusCircle className="mr-2 h-4 w-4" /> Add SKU
         </Button>
       </CardHeader>
@@ -150,7 +150,7 @@ export function SkuManagementClient({ initialSkus }: SkuManagementClientProps) {
               <TableRow>
                 <TableHead>Image</TableHead>
                 <TableHead>Name</TableHead>
-                <TableHead>Price</TableHead>
+                <TableHead>Price (₹)</TableHead>
                 <TableHead>Category</TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead>Visibility</TableHead>
