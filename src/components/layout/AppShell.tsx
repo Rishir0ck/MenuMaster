@@ -1,3 +1,4 @@
+
 "use client";
 import type { ReactNode } from 'react';
 import Link from "next/link";
@@ -5,14 +6,14 @@ import { usePathname } from 'next/navigation';
 import { SidebarProvider, Sidebar, SidebarHeader, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { LayoutDashboard, Store, Archive, DollarSign, Users, ShieldAlert, UserCircle, Menu } from "lucide-react";
+import { LayoutDashboard, Store, Archive, IndianRupee, Users, ShieldAlert, UserCircle, Menu } from "lucide-react";
 import { cn } from '@/lib/utils';
 
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/restaurants", label: "Restaurants", icon: Store },
   { href: "/inventory", label: "Inventory", icon: Archive },
-  { href: "/pricing", label: "Pricing", icon: DollarSign },
+  { href: "/pricing", label: "Pricing", icon: IndianRupee },
   { href: "/users", label: "Users", icon: Users },
   { href: "/fraud-detection", label: "Fraud Detection", icon: ShieldAlert },
 ];
