@@ -28,7 +28,7 @@ interface AppShellProps {
 export function AppShell({ children, pageTitle }: AppShellProps) {
   const pathname = usePathname();
   const router = useRouter();
-  const { isAuthenticated, logout, isLoading: authIsLoading } = useAuth();
+  const { isAuthenticated, logout, userName, isLoading: authIsLoading } = useAuth();
 
   useEffect(() => {
     if (!authIsLoading && !isAuthenticated) {
@@ -91,7 +91,7 @@ export function AppShell({ children, pageTitle }: AppShellProps) {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuLabel>Admin Account</DropdownMenuLabel>
+                <DropdownMenuLabel>{userName || 'Admin Account'}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>Settings</DropdownMenuItem>
                 <DropdownMenuItem>Support</DropdownMenuItem>

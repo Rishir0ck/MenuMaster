@@ -29,7 +29,10 @@ export default function LoginPage() {
     setIsSubmitting(true);
     // Simulate API call for mock login
     await new Promise(resolve => setTimeout(resolve, 1000));
-    login(); // This will set isAuthenticated and redirect via its own logic or useEffect
+    // For mock purposes, we'll pass a static name or derive it.
+    // Let's use "Admin User" for now.
+    const mockUserName = email.split('@')[0] || "Admin User"; // Basic name from email or default
+    login(mockUserName); 
     // No need to setIsSubmitting(false) as the component will likely redirect/unmount
   };
 
