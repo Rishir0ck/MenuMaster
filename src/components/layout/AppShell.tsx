@@ -2,12 +2,14 @@
 "use client";
 import type { ReactNode } from 'react';
 import Link from "next/link";
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 import { SidebarProvider, Sidebar, SidebarHeader, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { LayoutDashboard, Store, Archive, IndianRupee, Users, ShieldAlert, UserCircle, Menu } from "lucide-react";
+import { LayoutDashboard, Store, Archive, IndianRupee, Users, ShieldAlert, UserCircle, Menu, Loader2 } from "lucide-react";
 import { cn } from '@/lib/utils';
+import { useAuth } from '@/contexts/AuthContext';
 
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -25,6 +27,22 @@ interface AppShellProps {
 
 export function AppShell({ children, pageTitle }: AppShellProps) {
   const pathname = usePathname();
+  const router = useRouter();
+  const { isAuthenticated, logout, isLoading: authIsLoading } = useAuth();
+
+  useEffect(() => {
+    if (!authIsLoading && !isAuthenticated) {
+      router.replace('/login');
+    }
+  }, [isAuthenticated, authIsLoading, router]);
+
+  if (authIsLoading || !isAuthenticated) {
+    return (
+      <div className="flex min-h-screen w-full items-center justify-center bg-background">
+        <Loader2 className="h-12 w-12 animate-spin text-primary" />
+      </div>
+    );
+  }
 
   return (
     <SidebarProvider>
@@ -78,7 +96,7 @@ export function AppShell({ children, pageTitle }: AppShellProps) {
                 <DropdownMenuItem>Settings</DropdownMenuItem>
                 <DropdownMenuItem>Support</DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Logout</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => logout()}>Logout</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </header>
