@@ -20,6 +20,8 @@ interface PricingManagementClientProps {
   availableSkus: SkuItem[];
 }
 
+const GLOBAL_RULE_VALUE = "__GLOBAL_RULE__";
+
 const defaultRule: Omit<PricingRule, 'id' | 'status' | 'createdBy' | 'createdAt'> = {
   name: '',
   skuId: undefined,
@@ -88,7 +90,7 @@ export function PricingManagementClient({ initialRules, availableSkus }: Pricing
   };
   
   const handleSkuChange = (value: string) => {
-     setCurrentRule(prev => ({ ...prev, skuId: value }));
+     setCurrentRule(prev => ({ ...prev, skuId: value === GLOBAL_RULE_VALUE ? undefined : value }));
   };
 
   const handleSlabChange = (index: number, field: keyof PricingRule['slabs'][0], value: string) => {
@@ -233,28 +235,39 @@ export function PricingManagementClient({ initialRules, availableSkus }: Pricing
         <DialogContent className="sm:max-w-lg">
           <DialogHeader>
             <DialogTitle>{isEditing ? 'Edit Pricing Rule' : 'Add New Pricing Rule'}</DialogTitle>
+            <DialogDescription>
+              {isEditing ? `Update details for ${currentRule.name}.` : 'Enter details for the new pricing rule.'}
+            </DialogDescription>
           </DialogHeader>
           <form onSubmit={handleSubmit}>
             <div className="grid gap-4 py-4 max-h-[60vh] overflow-y-auto pr-2">
-              <div className="grid grid-cols-1 sm:grid-cols-4 items-start sm:items-center gap-x-4 gap-y-1">
+              {/* Name Field */}
+              <div className="grid grid-cols-1 gap-y-1.5 sm:grid-cols-4 sm:items-center sm:gap-x-4">
                 <Label htmlFor="name" className="sm:text-right">Rule Name</Label>
                 <Input id="name" name="name" value={currentRule.name || ''} onChange={handleChange} className="sm:col-span-3 w-full" required />
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-4 items-start sm:items-center gap-x-4 gap-y-1">
+
+              {/* Apply to SKU Field */}
+              <div className="grid grid-cols-1 gap-y-1.5 sm:grid-cols-4 sm:items-center sm:gap-x-4">
                 <Label htmlFor="skuId" className="sm:text-right">Apply to SKU</Label>
-                <Select value={currentRule.skuId || ''} onValueChange={handleSkuChange}>
+                <Select 
+                  value={currentRule.skuId ?? GLOBAL_RULE_VALUE} 
+                  onValueChange={handleSkuChange}
+                >
                   <SelectTrigger className="sm:col-span-3 w-full">
                     <SelectValue placeholder="Select SKU (optional)" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">None (Global/Category Rule)</SelectItem>
+                    <SelectItem value={GLOBAL_RULE_VALUE}>None (Global/Category Rule)</SelectItem>
                     {availableSkus.map(sku => (
                       <SelectItem key={sku.id} value={sku.id}>{sku.name}</SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
               </div>
-               <div className="grid grid-cols-1 sm:grid-cols-4 items-start sm:items-center gap-x-4 gap-y-1">
+
+              {/* Base Price Field */}
+              <div className="grid grid-cols-1 gap-y-1.5 sm:grid-cols-4 sm:items-center sm:gap-x-4">
                 <Label htmlFor="basePrice" className="sm:text-right">Base Price (₹)</Label>
                 <Input id="basePrice" name="basePrice" type="number" step="0.01" value={currentRule.basePrice || ''} onChange={handleChange} className="sm:col-span-3 w-full" placeholder="Optional" />
               </div>
@@ -262,22 +275,18 @@ export function PricingManagementClient({ initialRules, availableSkus }: Pricing
               <h4 className="col-span-1 sm:col-span-4 font-medium mt-2">Slab Pricing (₹)</h4>
               {(currentRule.slabs || []).map((slab, index) => (
                 <div key={index} className="col-span-1 sm:col-span-4 flex flex-wrap items-end gap-x-3 gap-y-2 border p-3 rounded-md">
-                    {/* From */}
                     <div className="flex flex-col gap-1 flex-grow basis-full xs:basis-[calc(33%-1rem)] sm:basis-[calc(25%-1rem)]">
                         <Label htmlFor={`slabFrom-${index}`} className="whitespace-nowrap text-xs">From Qty</Label>
                         <Input id={`slabFrom-${index}`} type="number" value={slab.from} onChange={(e) => handleSlabChange(index, 'from', e.target.value)} className="min-w-[60px] w-full" required />
                     </div>
-                    {/* To */}
                     <div className="flex flex-col gap-1 flex-grow basis-full xs:basis-[calc(33%-1rem)] sm:basis-[calc(25%-1rem)]">
                         <Label htmlFor={`slabTo-${index}`} className="whitespace-nowrap text-xs">To Qty (Optional)</Label>
                         <Input id={`slabTo-${index}`} type="number" value={slab.to} onChange={(e) => handleSlabChange(index, 'to', e.target.value)} className="min-w-[60px] w-full" placeholder="e.g. 10" />
                     </div>
-                    {/* Price */}
                     <div className="flex flex-col gap-1 flex-grow basis-full xs:basis-[calc(33%-1rem)] sm:basis-[calc(25%-1rem)]">
                         <Label htmlFor={`slabPrice-${index}`} className="whitespace-nowrap text-xs">Price/Unit (₹)</Label>
                         <Input id={`slabPrice-${index}`} type="number" step="0.01" value={slab.pricePerUnit} onChange={(e) => handleSlabChange(index, 'pricePerUnit', e.target.value)} className="min-w-[80px] w-full" required />
                     </div>
-                    {/* Delete Button */}
                     <div className="ml-auto flex-shrink-0 self-end">
                         <Button type="button" variant="ghost" size="icon" onClick={() => removeSlab(index)} className="text-destructive hover:text-destructive">
                             <Trash2 className="h-4 w-4" />
@@ -287,7 +296,7 @@ export function PricingManagementClient({ initialRules, availableSkus }: Pricing
               ))}
               <Button type="button" variant="outline" onClick={addSlab} className="col-span-1 sm:col-span-4">Add Slab</Button>
             </div>
-            <DialogFooter>
+            <DialogFooter className="mt-4">
               <Button type="button" variant="outline" onClick={handleCloseModal}>Cancel</Button>
               <Button type="submit">{isEditing ? 'Save Changes' : 'Submit for Approval'}</Button>
             </DialogFooter>
@@ -297,3 +306,4 @@ export function PricingManagementClient({ initialRules, availableSkus }: Pricing
     </Card>
   );
 }
+
