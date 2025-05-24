@@ -1,3 +1,4 @@
+
 "use client";
 
 import type { SkuItem } from '@/lib/types';
@@ -5,10 +6,10 @@ import { useState, type FormEvent } from 'react';
 import Image from 'next/image';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge';
+import { Badge } from '@/components/ui/badge';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input';
+import { Input } from '@/components/ui/input';
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -252,3 +253,5 @@ export function SkuManagementClient({ initialSkus }: SkuManagementClientProps) {
     </Card>
   );
 }
+
+    
