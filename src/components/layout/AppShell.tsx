@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 import { SidebarProvider, Sidebar, SidebarHeader, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { LayoutDashboard, Store, Archive, IndianRupee, Users, ShieldAlert, UserCircle, Menu, Loader2 } from "lucide-react";
+import { LayoutDashboard, Store, Archive, IndianRupee, Users, ShieldAlert, UserCircle, Menu, Loader2, ArrowLeft } from "lucide-react";
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/contexts/AuthContext';
 
@@ -82,11 +82,14 @@ export function AppShell({ children, pageTitle }: AppShellProps) {
         </Sidebar>
         <div className="flex flex-1 flex-col">
           <header className="sticky top-0 z-30 flex h-16 items-center gap-4 border-b bg-background/95 px-4 backdrop-blur supports-[backdrop-filter]:bg-background/60 sm:px-6">
+            <Button variant="ghost" size="icon" onClick={() => router.back()} aria-label="Go back">
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
             <SidebarTrigger className="md:hidden" >
               <Menu className="h-6 w-6"/>
             </SidebarTrigger>
-            <div className="flex-1 overflow-hidden"> {/* Added overflow-hidden here */}
-              <h1 className="text-lg font-semibold md:text-xl truncate">{pageTitle}</h1> {/* Added truncate */}
+            <div className="flex-1 overflow-hidden">
+              <h1 className="text-lg font-semibold md:text-xl truncate">{pageTitle}</h1>
             </div>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
