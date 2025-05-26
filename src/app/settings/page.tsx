@@ -8,24 +8,33 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter }
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Separator } from '@/components/ui/separator';
-import { Settings as SettingsIcon, User, KeyRound } from 'lucide-react';
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Switch } from "@/components/ui/switch";
+import { Settings as SettingsIcon, User, KeyRound, Palette, Bell } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from '@/hooks/use-toast';
+import { useTheme } from 'next-themes';
 
 export default function SettingsPage() {
   const { userName } = useAuth();
+  const { theme, setTheme } = useTheme();
   
   const [displayName, setDisplayName] = useState(userName || '');
-  const [email, setEmail] = useState(''); // Placeholder, as email is not in AuthContext
+  const [email, setEmail] = useState(''); 
 
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
 
+  const [emailNotificationsEnabled, setEmailNotificationsEnabled] = useState(true);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  
   useEffect(() => {
     setDisplayName(userName || '');
-    // Attempt to derive email if userName looks like one, or use a placeholder
     if (userName && userName.includes('@')) {
       setEmail(userName);
     } else {
@@ -35,7 +44,6 @@ export default function SettingsPage() {
 
   const handleSaveProfile = (e: FormEvent) => {
     e.preventDefault();
-    // Mock save profile
     console.log("Saving profile:", { displayName });
     toast({
       title: "Profile Updated",
@@ -61,7 +69,6 @@ export default function SettingsPage() {
       });
       return;
     }
-    // Mock change password
     console.log("Changing password for:", userName);
     toast({
       title: "Password Changed",
@@ -72,10 +79,21 @@ export default function SettingsPage() {
     setConfirmNewPassword('');
   };
 
+  const handleEmailNotificationToggle = (checked: boolean) => {
+    setEmailNotificationsEnabled(checked);
+    toast({
+      title: "Notification Settings Updated",
+      description: `Email notifications ${checked ? "enabled" : "disabled"}. (This is a mock setting)`,
+    });
+  };
+
+  if (!mounted) {
+    return null; // Avoid hydration mismatch for theme
+  }
+
   return (
     <AppShell pageTitle="User Settings">
       <div className="space-y-8 max-w-3xl mx-auto">
-        {/* Profile Information Card */}
         <Card>
           <CardHeader>
             <div className="flex items-center gap-3 mb-1">
@@ -101,7 +119,7 @@ export default function SettingsPage() {
                   id="email"
                   type="email"
                   value={email}
-                  readOnly // Email is usually not editable by user directly
+                  readOnly 
                   disabled 
                   className="md:col-span-2 bg-muted/50 cursor-not-allowed"
                 />
@@ -113,7 +131,6 @@ export default function SettingsPage() {
           </form>
         </Card>
 
-        {/* Change Password Card */}
         <Card>
           <CardHeader>
             <div className="flex items-center gap-3 mb-1">
@@ -164,7 +181,6 @@ export default function SettingsPage() {
           </form>
         </Card>
 
-         {/* General Settings Card Placeholder */}
         <Card>
           <CardHeader>
             <div className="flex items-center gap-3 mb-1">
@@ -173,11 +189,55 @@ export default function SettingsPage() {
             </div>
             <CardDescription>Manage general application preferences.</CardDescription>
           </CardHeader>
-          <CardContent>
-            <div className="flex flex-col items-center justify-center h-40 border-2 border-dashed border-muted rounded-lg">
-              <p className="text-md font-medium text-muted-foreground">Theme and notification settings coming soon.</p>
+          <CardContent className="space-y-6">
+            <div>
+              <Label className="text-base font-medium block mb-2 flex items-center gap-2">
+                <Palette className="h-5 w-5 text-muted-foreground" />
+                Theme
+              </Label>
+              <RadioGroup
+                value={theme}
+                onValueChange={setTheme}
+                className="flex flex-col space-y-1 md:flex-row md:space-y-0 md:space-x-4"
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="light" id="theme-light" />
+                  <Label htmlFor="theme-light" className="font-normal">Light</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="dark" id="theme-dark" />
+                  <Label htmlFor="theme-dark" className="font-normal">Dark</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="system" id="theme-system" />
+                  <Label htmlFor="theme-system" className="font-normal">System</Label>
+                </div>
+              </RadioGroup>
+            </div>
+
+            <div>
+              <Label className="text-base font-medium block mb-2 flex items-center gap-2">
+                <Bell className="h-5 w-5 text-muted-foreground" />
+                Notifications
+              </Label>
+              <div className="flex items-center justify-between rounded-lg border p-4 shadow-sm">
+                <div>
+                  <Label htmlFor="email-notifications" className="font-normal">
+                    Enable Email Notifications
+                  </Label>
+                  <p className="text-xs text-muted-foreground">
+                    Receive email updates and alerts from the application.
+                  </p>
+                </div>
+                <Switch
+                  id="email-notifications"
+                  checked={emailNotificationsEnabled}
+                  onCheckedChange={handleEmailNotificationToggle}
+                />
+              </div>
             </div>
           </CardContent>
+           {/* Optional: Add a footer to this card if there are global save actions for app settings */}
         </Card>
       </div>
     </AppShell>
