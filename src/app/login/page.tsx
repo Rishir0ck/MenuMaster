@@ -6,9 +6,10 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogTrigger } from '@/components/ui/dialog';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
-import { Loader2 } from 'lucide-react';
+import { Loader2, ShieldCheck } from 'lucide-react';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -17,8 +18,23 @@ export default function LoginPage() {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // State for modals
+  const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false);
+  const [showSignUpModal, setShowSignUpModal] = useState(false);
+
+  // State for forgot password modal
+  const [forgotPasswordEmail, setForgotPasswordEmail] = useState('');
+  const [isSendingOtp, setIsSendingOtp] = useState(false);
+
+  // State for sign up modal
+  const [signUpName, setSignUpName] = useState('');
+  const [signUpEmail, setSignUpEmail] = useState('');
+  const [signUpPassword, setSignUpPassword] = useState('');
+  const [signUpConfirmPassword, setSignUpConfirmPassword] = useState('');
+  const [isSigningUp, setIsSigningUp] = useState(false);
+
+
   useEffect(() => {
-    // If auth state is loaded and user is authenticated, redirect to dashboard
     if (!authIsLoading && isAuthenticated) {
       router.replace('/dashboard');
     }
@@ -27,16 +43,38 @@ export default function LoginPage() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulate API call for mock login
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    // For mock purposes, we'll pass a static name or derive it.
-    // Let's use "Admin User" for now.
-    const mockUserName = email.split('@')[0] || "Admin User"; // Basic name from email or default
-    login(mockUserName); 
-    // No need to setIsSubmitting(false) as the component will likely redirect/unmount
+    await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API call
+    const mockUserName = email.split('@')[0] || "Admin User";
+    login(mockUserName);
   };
 
-  // Show loader if auth state is loading or if user is authenticated (and about to be redirected)
+  const handleForgotPasswordSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setIsSendingOtp(true);
+    // Mock OTP sending
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    console.log("OTP sent to:", forgotPasswordEmail); // Placeholder
+    alert("OTP has been sent to your email (mock).");
+    setIsSendingOtp(false);
+    setShowForgotPasswordModal(false);
+  };
+
+  const handleSignUpSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    if (signUpPassword !== signUpConfirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+    setIsSigningUp(true);
+    // Mock sign up
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    console.log("Signing up user:", { name: signUpName, email: signUpEmail }); // Placeholder
+    alert("Account created successfully (mock)! Please log in.");
+    setIsSigningUp(false);
+    setShowSignUpModal(false);
+  };
+
+
   if (authIsLoading || (!authIsLoading && isAuthenticated)) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-background">
@@ -47,16 +85,17 @@ export default function LoginPage() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background p-4">
-      <Card className="w-full max-w-sm shadow-xl">
+      <Card className="w-full max-w-md shadow-xl">
         <CardHeader className="space-y-1 text-center">
           <div className="mx-auto mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-12 w-12 text-primary"><path d="M15.5 2.897A7.5 7.5 0 0 1 20.103 12h-2.607a4.903 4.903 0 0 0-3-4.196V2.897zM12 4.39a7.5 7.5 0 0 1 7.103 6.103H12V4.39zM3.897 12A7.5 7.5 0 0 1 12 4.897v2.607A4.903 4.903 0 0 0 7.804 10.5H3.897zM12 19.61a7.5 7.5 0 0 1-7.103-6.103H12v6.103zM8.5 14.804A4.903 4.903 0 0 0 12 17.103v2.607A7.5 7.5 0 0 1 3.897 12H6.5a4.903 4.903 0 0 0 2 2.804z"></path><circle cx="12" cy="12" r="2.5"></circle></svg>
+            {/* Replaced Logo */}
+            <ShieldCheck className="h-16 w-16 text-primary" />
           </div>
-          <CardTitle className="text-2xl">MenuMaster Admin</CardTitle>
-          <CardDescription>Enter your credentials to access the portal.</CardDescription>
+          <CardTitle className="text-3xl font-bold">MenuMaster Admin</CardTitle>
+          <CardDescription>Welcome back! Please sign in to your account.</CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit}>
-          <CardContent className="grid gap-4">
+          <CardContent className="grid gap-6">
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
               <Input
@@ -67,10 +106,22 @@ export default function LoginPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 disabled={isSubmitting}
+                className="text-base"
               />
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="password">Password</Label>
+              <div className="flex items-center justify-between">
+                <Label htmlFor="password">Password</Label>
+                <Button
+                  type="button"
+                  variant="link"
+                  className="px-0 text-sm h-auto"
+                  onClick={() => setShowForgotPasswordModal(true)}
+                  disabled={isSubmitting}
+                >
+                  Forgot password?
+                </Button>
+              </div>
               <Input
                 id="password"
                 type="password"
@@ -79,17 +130,139 @@ export default function LoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 disabled={isSubmitting}
+                className="text-base"
               />
             </div>
           </CardContent>
-          <CardFooter>
-            <Button type="submit" className="w-full" disabled={isSubmitting}>
+          <CardFooter className="flex flex-col gap-4">
+            <Button type="submit" className="w-full text-base py-3" disabled={isSubmitting}>
               {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              {isSubmitting ? 'Logging in...' : 'Login'}
+              {isSubmitting ? 'Signing In...' : 'Sign In'}
             </Button>
+             <div className="text-center text-sm text-muted-foreground">
+              Don't have an account?{' '}
+              <Button
+                type="button"
+                variant="link"
+                className="px-0 text-sm h-auto font-semibold text-primary"
+                onClick={() => setShowSignUpModal(true)}
+                disabled={isSubmitting}
+              >
+                Sign up
+              </Button>
+            </div>
           </CardFooter>
         </form>
       </Card>
+
+      {/* Forgot Password Modal */}
+      <Dialog open={showForgotPasswordModal} onOpenChange={setShowForgotPasswordModal}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-2xl">Forgot Password</DialogTitle>
+            <DialogDescription>
+              Enter your email address and we'll send you an OTP to reset your password.
+            </DialogDescription>
+          </DialogHeader>
+          <form onSubmit={handleForgotPasswordSubmit}>
+            <div className="grid gap-4 py-4">
+              <div className="grid gap-2">
+                <Label htmlFor="forgot-email">Email</Label>
+                <Input
+                  id="forgot-email"
+                  type="email"
+                  placeholder="you@example.com"
+                  value={forgotPasswordEmail}
+                  onChange={(e) => setForgotPasswordEmail(e.target.value)}
+                  required
+                  disabled={isSendingOtp}
+                />
+              </div>
+            </div>
+            <DialogFooter>
+              <Button type="button" variant="outline" onClick={() => setShowForgotPasswordModal(false)} disabled={isSendingOtp}>
+                Cancel
+              </Button>
+              <Button type="submit" disabled={isSendingOtp}>
+                {isSendingOtp && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                {isSendingOtp ? 'Sending OTP...' : 'Send OTP'}
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
+
+      {/* Sign Up Modal */}
+      <Dialog open={showSignUpModal} onOpenChange={setShowSignUpModal}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-2xl">Create Account</DialogTitle>
+            <DialogDescription>
+              Fill in the details below to create your MenuMaster admin account.
+            </DialogDescription>
+          </DialogHeader>
+          <form onSubmit={handleSignUpSubmit}>
+            <div className="grid gap-4 py-4">
+              <div className="grid gap-2">
+                <Label htmlFor="signup-name">Full Name</Label>
+                <Input
+                  id="signup-name"
+                  placeholder="John Doe"
+                  value={signUpName}
+                  onChange={(e) => setSignUpName(e.target.value)}
+                  required
+                  disabled={isSigningUp}
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="signup-email">Email</Label>
+                <Input
+                  id="signup-email"
+                  type="email"
+                  placeholder="you@example.com"
+                  value={signUpEmail}
+                  onChange={(e) => setSignUpEmail(e.target.value)}
+                  required
+                  disabled={isSigningUp}
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="signup-password">Password</Label>
+                <Input
+                  id="signup-password"
+                  type="password"
+                  placeholder="••••••••"
+                  value={signUpPassword}
+                  onChange={(e) => setSignUpPassword(e.target.value)}
+                  required
+                  disabled={isSigningUp}
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="signup-confirm-password">Confirm Password</Label>
+                <Input
+                  id="signup-confirm-password"
+                  type="password"
+                  placeholder="••••••••"
+                  value={signUpConfirmPassword}
+                  onChange={(e) => setSignUpConfirmPassword(e.target.value)}
+                  required
+                  disabled={isSigningUp}
+                />
+              </div>
+            </div>
+            <DialogFooter>
+              <Button type="button" variant="outline" onClick={() => setShowSignUpModal(false)} disabled={isSigningUp}>
+                Cancel
+              </Button>
+              <Button type="submit" disabled={isSigningUp}>
+                {isSigningUp && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                {isSigningUp ? 'Creating Account...' : 'Create Account'}
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
