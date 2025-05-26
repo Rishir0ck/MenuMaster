@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 import { SidebarProvider, Sidebar, SidebarHeader, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { LayoutDashboard, Store, Archive, IndianRupee, Users, ShieldAlert, UserCircle, Menu, Loader2, ArrowLeft } from "lucide-react";
+import { LayoutDashboard, Store, Archive, IndianRupee, Users, ShieldAlert, UserCircle, Menu, Loader2, ArrowLeft, Settings } from "lucide-react";
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/contexts/AuthContext';
 
@@ -101,8 +101,16 @@ export function AppShell({ children, pageTitle }: AppShellProps) {
               <DropdownMenuContent align="end">
                 <DropdownMenuLabel>{userName || 'Admin Account'}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Settings</DropdownMenuItem>
-                <DropdownMenuItem>Support</DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/settings" className="cursor-pointer">
+                    <Settings className="mr-2 h-4 w-4" />
+                    <span>Settings</span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  {/* Placeholder for Support, can be linked later */}
+                  Support
+                </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={() => logout()}>Logout</DropdownMenuItem>
               </DropdownMenuContent>
