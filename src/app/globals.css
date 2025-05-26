@@ -8,89 +8,89 @@ body {
 
 @layer base {
   :root {
-    --background: 0 0% 96.1%; /* Light Grey #F5F5F5 */
-    --foreground: 240 10% 3.9%; /* Darker for better contrast */
+    --background: 220 20% 96%; /* Very Light Cool Grey */
+    --foreground: 220 10% 20%; /* Dark Cool Grey for better contrast */
 
     --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
+    --card-foreground: 220 10% 20%;
     --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
+    --popover-foreground: 220 10% 20%;
 
-    --primary: 261 51% 51%; /* Deep Purple #673AB7 */
+    --primary: 210 60% 45%; /* Professional Blue */
     --primary-foreground: 0 0% 98%; /* Light text for primary */
 
-    --secondary: 240 4.8% 92%; /* Slightly darker grey */
-    --secondary-foreground: 240 5.9% 10%;
+    --secondary: 220 15% 92%; /* Slightly darker cool grey */
+    --secondary-foreground: 220 10% 20%;
 
-    --muted: 240 4.8% 90%;
-    --muted-foreground: 240 3.8% 46.1%;
+    --muted: 220 15% 90%;
+    --muted-foreground: 220 10% 40%;
 
-    --accent: 174 100% 29.4%; /* Teal #009688 */
+    --accent: 150 50% 40%; /* Muted Teal/Green */
     --accent-foreground: 0 0% 98%; /* Light text for accent */
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 70% 50%; /* Adjusted for better harmony */
     --destructive-foreground: 0 0% 98%;
 
-    --border: 240 5.9% 88%;
-    --input: 240 5.9% 88%;
-    --ring: 261 51% 51%; /* Primary color for rings */
+    --border: 220 15% 88%;
+    --input: 220 15% 88%;
+    --ring: 210 60% 45%; /* Primary color for rings */
 
     --radius: 0.5rem;
 
-    --chart-1: 261 51% 51%;
-    --chart-2: 174 100% 29.4%;
-    --chart-3: 210 40% 50%;
-    --chart-4: 30 80% 60%;
-    --chart-5: 120 40% 50%;
+    --chart-1: 210 60% 45%; /* Professional Blue */
+    --chart-2: 150 50% 40%; /* Muted Teal/Green */
+    --chart-3: 200 50% 50%; /* Muted Cyan */
+    --chart-4: 30 70% 55%;  /* Muted Orange */
+    --chart-5: 260 50% 55%; /* Muted Purple */
 
     /* Sidebar specific theme */
-    --sidebar-background: 240 5% 92%; /* Slightly darker than main background */
-    --sidebar-foreground: 240 8% 25%; /* Dark text for sidebar */
-    --sidebar-primary: 261 51% 51%; /* Primary color for active items */
+    --sidebar-background: 220 15% 92%; /* Slightly darker cool grey than main background */
+    --sidebar-foreground: 220 10% 30%; /* Dark text for sidebar */
+    --sidebar-primary: 210 60% 45%; /* Primary color for active items */
     --sidebar-primary-foreground: 0 0% 98%; /* Light text for active items */
-    --sidebar-accent: 261 51% 58%; /* Lighter/hover primary for sidebar items */
+    --sidebar-accent: 210 60% 50%; /* Lighter/hover primary for sidebar items */
     --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-border: 240 5.9% 85%;
-    --sidebar-ring: 261 51% 51%;
+    --sidebar-border: 220 15% 85%;
+    --sidebar-ring: 210 60% 45%;
   }
 
   .dark {
-    --background: 240 6% 10%;
-    --foreground: 0 0% 98%;
+    --background: 220 15% 10%; /* Very Dark Cool Grey */
+    --foreground: 220 10% 90%; /* Light Cool Grey Text */
 
-    --card: 240 6% 10%;
-    --card-foreground: 0 0% 98%;
-    --popover: 240 6% 10%;
-    --popover-foreground: 0 0% 98%;
+    --card: 220 15% 12%; /* Slightly off-black card */
+    --card-foreground: 220 10% 90%;
+    --popover: 220 15% 12%;
+    --popover-foreground: 220 10% 90%;
 
-    --primary: 261 60% 65%; /* Lighter purple for dark mode */
-    --primary-foreground: 261 10% 15%;
+    --primary: 210 70% 60%; /* Lighter Professional Blue for dark mode */
+    --primary-foreground: 220 10% 10%; /* Dark text on primary */
 
-    --secondary: 240 5% 15%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 220 10% 18%; /* Darker grey for secondary elements */
+    --secondary-foreground: 220 10% 90%;
 
-    --muted: 240 5% 20%;
-    --muted-foreground: 240 4% 65%;
+    --muted: 220 10% 22%;
+    --muted-foreground: 220 10% 60%;
 
-    --accent: 174 70% 50%; /* Lighter teal for dark mode */
-    --accent-foreground: 174 10% 15%;
+    --accent: 150 60% 55%; /* Lighter Muted Teal/Green for dark mode */
+    --accent-foreground: 220 10% 10%;
 
-    --destructive: 0 70% 50%;
+    --destructive: 0 60% 50%; /* Adjusted for dark mode */
     --destructive-foreground: 0 0% 98%;
 
-    --border: 240 5% 20%;
-    --input: 240 5% 20%;
-    --ring: 261 60% 65%;
+    --border: 220 10% 25%;
+    --input: 220 10% 25%;
+    --ring: 210 70% 60%;
 
     /* Sidebar specific theme for dark mode */
-    --sidebar-background: 240 6% 8%;
-    --sidebar-foreground: 0 0% 90%;
-    --sidebar-primary: 261 60% 65%;
-    --sidebar-primary-foreground: 261 10% 15%;
-    --sidebar-accent: 261 60% 55%;
+    --sidebar-background: 220 15% 8%;
+    --sidebar-foreground: 220 10% 85%;
+    --sidebar-primary: 210 70% 60%;
+    --sidebar-primary-foreground: 220 10% 10%;
+    --sidebar-accent: 210 70% 55%;
     --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-border: 240 5% 12%;
-    --sidebar-ring: 261 60% 65%;
+    --sidebar-border: 220 10% 15%;
+    --sidebar-ring: 210 70% 60%;
   }
 }
 
